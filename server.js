@@ -1,8 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-
 const pool = require("./src/config/database");
+const authRoutes = require("./src/routes/authRoutes");
+const authenticateToken = require("./src/middleware/authMiddleware");
+
+
 
 const app = express();
 
@@ -11,6 +14,14 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRoutes);
+
+app.get("/protected", authenticateToken, (req, res) => {
+  res.json({
+    message: "You have access to the protected route!",
+    user: req.user,
+  });
+});
 
 // Test route
 app.get("/", (req, res) => {
