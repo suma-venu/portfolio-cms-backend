@@ -4,7 +4,7 @@ require("dotenv").config();
 const pool = require("./src/config/database");
 const authRoutes = require("./src/routes/authRoutes");
 const authenticateToken = require("./src/middleware/authMiddleware");
-
+const contentRoutes = require("./src/routes/contentRoutes");
 
 
 const app = express();
@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 app.use("/auth", authRoutes);
+app.use("/api", contentRoutes);
 
 app.get("/protected", authenticateToken, (req, res) => {
   res.json({
