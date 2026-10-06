@@ -6,6 +6,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const authenticateToken = require("./src/middleware/authMiddleware");
 const contentRoutes = require("./src/routes/contentRoutes");
 const uploadRoutes = require("./src/routes/uploadRoutes");
+const contactRoutes = require("./src/routes/contactRoutes");
 
 const app = express();
 
@@ -18,6 +19,8 @@ app.use("/auth", authRoutes);
 app.use("/api", contentRoutes);
 app.use("/upload", uploadRoutes);
 app.use("/uploads", express.static("uploads"));
+app.use("/api", contactRoutes);
+
 app.get("/protected", authenticateToken, (req, res) => {
   res.json({
     message: "You have access to the protected route!",
